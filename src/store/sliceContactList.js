@@ -1,5 +1,4 @@
 import { createSlice, nanoid } from '@reduxjs/toolkit'
-// import { toast } from 'react-toastify';
 
 const initialState = {
     contacts: [
@@ -23,9 +22,7 @@ const contactsSlice = createSlice({
                 return { payload: newContact }
             },
             reducer: (state, { payload }) => {
-
-
-state.contacts.push(payload)
+                state.contacts.push(payload)
             },
         },
            removeContactAction: (state, { payload }) => {
@@ -35,4 +32,4 @@ state.contacts.push(payload)
 })
 
 export const contactsReduser = contactsSlice.reducer
-export const { addContactAction, removeContactAction, filterContactAction} = contactsSlice.actions
+export const { addContactAction, removeContactAction} = contactsSlice.actions

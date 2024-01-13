@@ -1,36 +1,32 @@
 import css from './ContactList.module.css';
 import { ContactListItem } from '../ContactListItem/ContactListItem';
 import { useDispatch, useSelector } from 'react-redux';
-import { removeContactAction } from 'store/contactListSlice/sliceContactList';
+import { getContactThunk } from 'services/getContact';
+import { useEffect } from 'react';
+import { selectVisibleContacts } from 'store/selectors';
 
 export const ContactList = () => {
-  const { contacts } = useSelector(state => state.contacts);
-  const { filter } = useSelector(state => state.filter);
   const dispatch = useDispatch();
+  const contacts = useSelector(selectVisibleContacts);
+  useEffect(() => {
+    dispatch(getContactThunk());
+    // console.log('getContactThunk :>> ', 'getContactThunk');
+  }, [dispatch]);
 
-  const deleteContact = id => {
-    dispatch(removeContactAction(id));
-  };
-
-  const contactsRender = () => {
-    if (contacts.length && filter) {
-      return contacts.filter(contact =>
-        contact.name.toLowerCase().includes(filter.toLowerCase())
-      );
-    } else {
-      return contacts;
-    }
-  };
+  // const contactsRender = () => {
+  //   if (contacts.length && filter) {
+  //     return contacts.filter(contact =>
+  //       contact.name.toLowerCase()
+  //.includes(filter.toLowerCase())
+  //     );
+  //   } else {
+  //     return contacts;
+  //   }
+  // };
   return contacts.length ? (
     <ul className={css.contactsList}>
-      {contactsRender().map(({ name, number, id }) => (
-        <ContactListItem
-          name={name}
-          number={number}
-          key={id}
-          id={id}
-          deleteContact={deleteContact}
-        />
+      {contacts.map(({ name, phone, id }) => (
+        <ContactListItem name={name} phone={phone} key={id} id={id} />
       ))}
     </ul>
   ) : (

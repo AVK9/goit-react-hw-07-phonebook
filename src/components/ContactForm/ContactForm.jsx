@@ -3,13 +3,16 @@ import css from './ContactForm.module.css';
 import { Icon } from '../img/Icon';
 import { IMaskInput } from 'react-imask';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContactAction } from 'store/contactListSlice/sliceContactList';
+import { toast } from 'react-toastify';
+import { nanoid } from '@reduxjs/toolkit';
+import { addContactThunk } from 'services/getContact';
+import { selectContacts } from 'store/selectors';
 
-export function ContactForm({ onSubmit }) {
+export function ContactForm() {
   const [nameContact, setNameContact] = useState('');
   const [number, setNumber] = useState('');
   const dispatch = useDispatch();
-  const { contacts } = useSelector(state => state.contacts);
+  const contacts = useSelector(selectContacts);
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -32,14 +35,15 @@ export function ContactForm({ onSubmit }) {
   };
 
   const checkName = nameContact => {
-    const { name } = contacts;
     const findName = contact =>
       contact.name.toLowerCase() === nameContact.toLowerCase();
     if (contacts.length && contacts.some(findName)) {
-      return alert(`${name} is already in contacts`);
-      // toast.warn(`${name} is already in contacts.`)
+      return toast.warn(`${nameContact} is already in contacts.`);
+      // alert(`${name} is already in contacts`);
     } else {
-      dispatch(addContactAction({ name: nameContact, number }));
+      dispatch(
+        addContactThunk({ name: nameContact, phone: number, id: nanoid() })
+      );
       console.log('HELLO');
       reset();
     }

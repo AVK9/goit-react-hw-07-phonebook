@@ -1,12 +1,10 @@
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-// import { toast } from 'react-toastify';
 import { Title } from './Title/Title';
 import { ContactForm } from './ContactForm/ContactForm';
 import { ContactList } from './ContactList/ContactList';
 import { Filter } from './Filter/Filter';
-
-import '../store/store';
+// import '../store/store';
 
 export function App() {
   return (
