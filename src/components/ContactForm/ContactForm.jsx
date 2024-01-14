@@ -41,13 +41,14 @@ export function ContactForm() {
       return toast.warn(`${nameContact} is already in contacts.`);
       // alert(`${name} is already in contacts`);
     }
-    if (number === '') {
+    if (number.length < 19) {
       return toast.warn('Pleasure input number phome');
     } else {
       dispatch(
         addContactThunk({ name: nameContact, phone: number, id: nanoid() })
       );
       console.log('HELLO');
+      console.log('number :>> ');
       reset();
     }
   };
