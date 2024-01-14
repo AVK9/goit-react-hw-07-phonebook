@@ -40,6 +40,9 @@ export function ContactForm() {
     if (contacts.length && contacts.some(findName)) {
       return toast.warn(`${nameContact} is already in contacts.`);
       // alert(`${name} is already in contacts`);
+    }
+    if (number === '') {
+      return toast.warn('Pleasure input number phome');
     } else {
       dispatch(
         addContactThunk({ name: nameContact, phone: number, id: nanoid() })
