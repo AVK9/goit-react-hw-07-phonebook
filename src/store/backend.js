@@ -34,7 +34,6 @@ const handleDelFulfilled = (state, { payload }) => {
 const contactsSlice = createSlice({
     name: 'contacts',
     initialState,
-     reducers: {},
     extraReducers: (builder)=>{
         builder
         
@@ -43,9 +42,9 @@ const contactsSlice = createSlice({
         .addCase(delContactThunk.fulfilled, handleDelFulfilled)
         
         
-        .addMatcher((action) => action.type.endsWith('/pendihg'), handlePending)
-        .addMatcher((action)=> action.type.endsWith('/fulfilled'), handleFulfilled)
-        .addMatcher((action)=> action.type.endsWith('/rejected'), handleRejected)
+        .addMatcher(({type}) => type.endsWith('/pendihg'), handlePending)
+        .addMatcher(({type})=> type.endsWith('/fulfilled'), handleFulfilled)
+        .addMatcher(({type})=> type.endsWith('/rejected'), handleRejected)
         
     },
 }
